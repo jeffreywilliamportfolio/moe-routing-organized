@@ -6,8 +6,6 @@ This repository asks a narrow interpretability question:
 
 The strongest current answer is yes, but only in a model-specific and regime-specific way. In HauhauCS/Qwen3.5-35B-A3B, Expert 114 at Layer 14 tracks generated inhabited first-person phenomenological or agency/inner-state register under the tested template and decoding regime. In the 122B follow-up, that Expert 114 index does not transfer; the useful signal moves to a different architecture-aware surface, especially softmax-side Expert 48 in inward/experience/hum generations.
 
-That matters because it turns a vague "self-reference" story into a testable routing claim with controls, failures, and boundaries. The result is not a consciousness or self-awareness claim. It is evidence that a narrow generated register can be localized, stress-tested, and compared across MoE architectures when prefill/generation, token matching, routing reconstruction, and spill artifacts are handled carefully.
-
 This is a reviewer-facing archive for the Qwen3.5 35B and 122B HauhauCS MoE routing experiments.
 
 If you are reviewing this research, start with:
