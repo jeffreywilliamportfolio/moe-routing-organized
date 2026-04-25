@@ -1,6 +1,8 @@
 # MoE Routing Organized
 
-This repository asks a narrow interpretability question: when an MoE language model generates text in an inward, first-person, phenomenological register, does that shift show up as a stable routing or residual-stream signature rather than just as surface wording?
+This repository asks a narrow interpretability question: 
+
+>when an MoE language model generates text in an inward, first-person, phenomenological register, does that shift show up as a stable routing or residual-stream signature rather than just as surface wording?
 
 The strongest current answer is yes, but only in a model-specific and regime-specific way. In HauhauCS/Qwen3.5-35B-A3B, Expert 114 at Layer 14 tracks generated inhabited first-person phenomenological or agency/inner-state register under the tested template and decoding regime. In the 122B follow-up, that Expert 114 index does not transfer; the useful signal moves to a different architecture-aware surface, especially softmax-side Expert 48 in inward/experience/hum generations.
 
