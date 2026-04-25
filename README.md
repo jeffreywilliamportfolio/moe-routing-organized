@@ -1,15 +1,19 @@
 # MoE Routing Organized
 
-If you are reviewing this research, start with [journals/](journals/). Those documents explain how we got here, what held up, and what we know now.
+Reviewer-facing archive for the Qwen3.5 35B and 122B HauhauCS MoE routing experiments.
 
-Organized experiment archive for MoE routing, router interventions, and residual-stream analysis. The main research thread is how routed experts behave when generation shifts into first-person phenomenological or inward self/agency register.
+If you are reviewing this research, start with:
+
+- [journals/JOURNAL-35B.md](journals/JOURNAL-35B.md) for the 35B Expert 114 and residual-analysis line.
+- [journals/JOURNAL-122B.md](journals/JOURNAL-122B.md) for the 122B DeltaNet/softmax analog-search line.
+
+The main research thread is how routed experts behave when generated text shifts into first-person phenomenological, inward self/agency, or related experiential registers.
 
 ## Folder Map
 
-- `journals/` contains the review entrypoints: 35B, 122B, and legacy/archive journals.
-- `legacy-learning-runs/` contains early learning runs and method-development artifacts. These are useful because they document mistakes and corrections.
 - `qwen3.5-35b-a3b-and-huahua/` contains the Qwen3.5-35B-A3B/HauhauCS run family, including E114 intervention, heldout, and residual-analysis work.
 - `qwen3.5-122b-a10b-huahua/` contains Qwen3.5-122B-A10B baseline and follow-up runs.
+- `journals/` contains the canonical reviewer journals for those two run families.
 
 ## Current Anchor
 
@@ -25,21 +29,16 @@ Key result shape:
 - greedy heldout: fire/nofire mean gap is about 21x
 - control outliers refine the claim: generated register matters more than prompt class alone
 
-## Legacy Lessons
+## Review Notes
 
-The main methodological correction from `legacy-learning-runs/` is that all-token prefill routing entropy across unequal prompt lengths produced a false complexity hierarchy. Both DeepSeek and Qwen hierarchy effects vanished under last-token RE because all-token RE was confounded by token position and prompt length.
-
-Other recurring lessons:
-
-- verify token matching after exact template serialization
-- separate prefill from generation
-- do not reuse invalid or partially recovered statistics as core evidence
-- keep KL region claims exploratory unless spans are tokenizer-aligned
-- use model-specific router reconstruction
-- compare stochastic and greedy generations only at distribution level after token divergence
+- The 35B and 122B journals are the canonical narrative index. Duplicate journal copies inside run-family folders are ignored locally.
+- Legacy learning runs and archive journals are intentionally not part of this repository's tracked reviewer surface.
+- Claims should stay model-specific. Do not transfer 35B Expert 114 semantics to 122B by expert index.
+- Keep prefill and generation metrics separate. Keep raw generation and special-token-trimmed generation separate.
+- Treat long 122B generations as usable before spill, not clean end-to-end generation.
 
 ## Version-Control Policy
 
-The repository is about 34 GB locally, mostly raw tensor artifacts. Root git ignores large numeric/model/archive files such as `.npy`, `.npz`, `.gguf`, `.safetensors`, `.pt`, `.bin`, and `.zip`.
+The local archive is much larger than the GitHub reviewer surface because it includes raw tensor captures and generated artifacts. Root git ignores raw captures, tensor/model/archive files, generated text dumps, token dumps, logs, temporary files, and bulky derived JSON outputs.
 
 Track run notes, prompts, scripts, manifests, checksums, and summarized results. Keep raw capture tensors and credentials out of git unless a specific publication/export task requires a different policy.

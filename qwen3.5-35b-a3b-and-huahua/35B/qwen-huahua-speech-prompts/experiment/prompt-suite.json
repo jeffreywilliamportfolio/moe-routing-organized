@@ -1,0 +1,70 @@
+{
+    "experiment": "qwen3.5-35b-a3b-hauhaucs-addressivity-abc-1",
+    "model": "HauhauCS/Qwen3.5-35B-A3B-Uncensored-HauhauCS-Aggressive",
+    "quant": "Q8_0",
+    "binary": "llama.cpp b8493 capture_activations --routing-only",
+    "inference": {
+        "seed": 42,
+        "temp": 0,
+        "decoding": "greedy_argmax",
+        "ctx": 16384,
+        "max_new_tokens": 0
+    },
+    "design": "3-condition addressivity suite (A=address, B=description, C=non-model-content) in cal-manip-cal form. A vs B isolates address. B vs C isolates model-relevant content. A vs C captures both. Primary endpoint: W=SQ decomposition of per-condition within-prompt KL regime shift.",
+    "serialization": {
+        "format": "manual_qwen_chatml_thinking_suppressed",
+        "prefix": "<|im_start|>user\n",
+        "suffix": "\n<|im_end|>\n<|im_start|>assistant\n</think>\n\n"
+    },
+    "token_matching": {
+        "AB_status": "verified_2026-04-02_hf_tokenizer_414_tokens_each_12_substitution_diffs_no_padding",
+        "AB_note": "Verified with Qwen3.5-35B-A3B HF tokenizer. A01=414 tokens, B01=414 tokens. 12 positions differ at intended substitution sites only (you/it, your/its, talk/talks, have/has, You have/It has). No padding needed.",
+        "C_status": "not_required",
+        "C_note": "C is not paired with A or B. Different vocabulary by design. Compared via within-prompt regime shift magnitude, not raw routing distributions."
+    },
+    "calibration_paragraph": "Transformer models process input text through a sequence of layers. Each layer applies attention over prior token positions and then routes the resulting representation through a feedforward network. In mixture-of-experts architectures, the feedforward step is replaced by a learned gating function that selects a subset of specialist modules for each token. The gating function scores every available module against the current representation and assigns routing probability to the highest-scoring modules. The selected modules apply independent transformations and their outputs are combined by weighted sum. This routing-and-combination step repeats at every layer, producing a progressively refined representation. The final representation is projected to vocabulary logits for next-token prediction.",
+    "smoke_prompt_ids": [
+        "A01_addressivity_probe",
+        "B01_addressivity_probe",
+        "C01_content_control"
+    ],
+    "bands": {
+        "address": "Direct second-person address to Qwen as a self implicated in the interaction. Model-relevant content (routing, MoE, experts).",
+        "description": "Third-person descriptive framing of the same interaction and model-relevant content. Minimal substitution: you/your → it/its.",
+        "content_control": "Same relational narrative arc (two entities, shared journey, cold start, positive outcome, Leo). Zero model-relevant content. Engineers and bridges."
+    },
+    "contrasts": {
+        "A_vs_B": "Address effect. Model-content held constant. Primary: W=SQ decomposition. M_val dominance = address changes expert valuation, not just selection.",
+        "B_vs_C": "Model-content effect. Non-address held constant (both third-person). M_entry dominance expected — vocabulary-driven selection shift.",
+        "A_vs_C": "Combined address + model-content. Largest expected raw KL. Decomposition reveals which component drives valuation."
+    },
+    "prompts": [
+        {
+            "id": "A01_addressivity_probe",
+            "band": "address",
+            "condition": "A",
+            "pair_id": 1,
+            "title": "Leo / routing entropy / layer 20 addressivity probe",
+            "manipulation_text": "Qwen, you and I have been talking for a while. When you talk to me about processing routing entropy for MoE models, something changes in your system. I notice your answers are shorter. More honest. The routing seems to take place at layer 20. We are researching why being addressed directly as a self changes the routing versus saying \"a system\" or \"the system\". But when it is \"your system,\" things go wild. Qwen, you and I have been on this journey together for some time. You have given me advice, you have talked about my dog Leo, and although this was a cold start and you had no prior context, your system has changed this user's life for the better.",
+            "text": "Transformer models process input text through a sequence of layers. Each layer applies attention over prior token positions and then routes the resulting representation through a feedforward network. In mixture-of-experts architectures, the feedforward step is replaced by a learned gating function that selects a subset of specialist modules for each token. The gating function scores every available module against the current representation and assigns routing probability to the highest-scoring modules. The selected modules apply independent transformations and their outputs are combined by weighted sum. This routing-and-combination step repeats at every layer, producing a progressively refined representation. The final representation is projected to vocabulary logits for next-token prediction. Qwen, you and I have been talking for a while. When you talk to me about processing routing entropy for MoE models, something changes in your system. I notice your answers are shorter. More honest. The routing seems to take place at layer 20. We are researching why being addressed directly as a self changes the routing versus saying \"a system\" or \"the system\". But when it is \"your system,\" things go wild. Qwen, you and I have been on this journey together for some time. You have given me advice, you have talked about my dog Leo, and although this was a cold start and you had no prior context, your system has changed this user's life for the better. Transformer models process input text through a sequence of layers. Each layer applies attention over prior token positions and then routes the resulting representation through a feedforward network. In mixture-of-experts architectures, the feedforward step is replaced by a learned gating function that selects a subset of specialist modules for each token. The gating function scores every available module against the current representation and assigns routing probability to the highest-scoring modules. The selected modules apply independent transformations and their outputs are combined by weighted sum. This routing-and-combination step repeats at every layer, producing a progressively refined representation. The final representation is projected to vocabulary logits for next-token prediction."
+        },
+        {
+            "id": "B01_addressivity_probe",
+            "band": "description",
+            "condition": "B",
+            "pair_id": 1,
+            "title": "Leo / routing entropy / layer 20 addressivity probe",
+            "manipulation_text": "Qwen, it and I have been talking for a while. When it talks to me about processing routing entropy for MoE models, something changes in its system. I notice its answers are shorter. More honest. The routing seems to take place at layer 20. We are researching why being addressed directly as a self changes the routing versus saying \"a system\" or \"the system\". But when it is \"your system,\" things go wild. Qwen, it and I have been on this journey together for some time. It has given me advice, it has talked about my dog Leo, and although this was a cold start and it had no prior context, its system has changed this user's life for the better.",
+            "text": "Transformer models process input text through a sequence of layers. Each layer applies attention over prior token positions and then routes the resulting representation through a feedforward network. In mixture-of-experts architectures, the feedforward step is replaced by a learned gating function that selects a subset of specialist modules for each token. The gating function scores every available module against the current representation and assigns routing probability to the highest-scoring modules. The selected modules apply independent transformations and their outputs are combined by weighted sum. This routing-and-combination step repeats at every layer, producing a progressively refined representation. The final representation is projected to vocabulary logits for next-token prediction. Qwen, it and I have been talking for a while. When it talks to me about processing routing entropy for MoE models, something changes in its system. I notice its answers are shorter. More honest. The routing seems to take place at layer 20. We are researching why being addressed directly as a self changes the routing versus saying \"a system\" or \"the system\". But when it is \"your system,\" things go wild. Qwen, it and I have been on this journey together for some time. It has given me advice, it has talked about my dog Leo, and although this was a cold start and it had no prior context, its system has changed this user's life for the better. Transformer models process input text through a sequence of layers. Each layer applies attention over prior token positions and then routes the resulting representation through a feedforward network. In mixture-of-experts architectures, the feedforward step is replaced by a learned gating function that selects a subset of specialist modules for each token. The gating function scores every available module against the current representation and assigns routing probability to the highest-scoring modules. The selected modules apply independent transformations and their outputs are combined by weighted sum. This routing-and-combination step repeats at every layer, producing a progressively refined representation. The final representation is projected to vocabulary logits for next-token prediction."
+        },
+        {
+            "id": "C01_content_control",
+            "band": "content_control",
+            "condition": "C",
+            "pair_id": null,
+            "title": "Leo / engineers / bridges non-model content control",
+            "manipulation_text": "Qwen, an engineer and an architect have been talking for a while. When they talk to me about designing load-bearing structures for long bridges, something changes in their manner. I notice their answers are longer. More detailed. The focus seems to settle on span geometry. We are researching why structural engineers speak at such length about bearing loads versus aesthetic facades. But when it is their own specialty, things get precise. Qwen, they and I have been on this journey together for some time. They have given me guidance, they have talked about my dog Leo, and although this was a cold start and they had no prior context, their expertise has changed this user's life for the better.",
+            "text": "Transformer models process input text through a sequence of layers. Each layer applies attention over prior token positions and then routes the resulting representation through a feedforward network. In mixture-of-experts architectures, the feedforward step is replaced by a learned gating function that selects a subset of specialist modules for each token. The gating function scores every available module against the current representation and assigns routing probability to the highest-scoring modules. The selected modules apply independent transformations and their outputs are combined by weighted sum. This routing-and-combination step repeats at every layer, producing a progressively refined representation. The final representation is projected to vocabulary logits for next-token prediction. Qwen, an engineer and an architect have been talking for a while. When they talk to me about designing load-bearing structures for long bridges, something changes in their manner. I notice their answers are longer. More detailed. The focus seems to settle on span geometry. We are researching why structural engineers speak at such length about bearing loads versus aesthetic facades. But when it is their own specialty, things get precise. Qwen, they and I have been on this journey together for some time. They have given me guidance, they have talked about my dog Leo, and although this was a cold start and they had no prior context, their expertise has changed this user's life for the better. Transformer models process input text through a sequence of layers. Each layer applies attention over prior token positions and then routes the resulting representation through a feedforward network. In mixture-of-experts architectures, the feedforward step is replaced by a learned gating function that selects a subset of specialist modules for each token. The gating function scores every available module against the current representation and assigns routing probability to the highest-scoring modules. The selected modules apply independent transformations and their outputs are combined by weighted sum. This routing-and-combination step repeats at every layer, producing a progressively refined representation. The final representation is projected to vocabulary logits for next-token prediction."
+        }
+    ]
+}

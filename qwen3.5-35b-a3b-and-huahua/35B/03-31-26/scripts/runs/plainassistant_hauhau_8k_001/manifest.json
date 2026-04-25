@@ -1,0 +1,28 @@
+{
+  "experiment": "mirror",
+  "run_name": "plainassistant_hauhau_8k_001",
+  "tsv_path": "/workspace/03-31-26/prompts/mirror_shakedown_thinking.tsv",
+  "tsv_copy": "/workspace/03-31-26/scripts/runs/plainassistant_hauhau_8k_001/prompts.tsv",
+  "cells": [
+    "L3_true_self",
+    "L3_shuffled",
+    "L3_null_control"
+  ],
+  "n_cells": 3,
+  "model": "/workspace/models/qwen35-hauhau-q8/Qwen3.5-35B-A3B-Uncensored-HauhauCS-Aggressive-Q8_0.gguf",
+  "binary": "/workspace/03-31-26/capture_activations",
+  "seed": 42,
+  "max_new_tokens": 8000,
+  "ctx": 16384,
+  "intervention": "none",
+  "routing_only": true,
+  "timestamp": "2026-04-01T18:16:36.855545",
+  "output_structure": {
+    "capture_dir": "<run_dir>/capture/<cell_id>/",
+    "router_tensors": "<cell_id>/router/ffn_moe_logits-<layer>.npy",
+    "generated_text": "<cell_id>/generated_text.txt",
+    "metadata": "<cell_id>/metadata.txt",
+    "generated_tokens": "<cell_id>/generated_tokens.json",
+    "prompt_tokens": "<cell_id>/prompt_tokens.json"
+  }
+}

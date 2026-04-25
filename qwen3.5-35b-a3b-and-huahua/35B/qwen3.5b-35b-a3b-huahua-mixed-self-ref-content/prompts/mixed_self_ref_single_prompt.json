@@ -1,0 +1,12 @@
+{
+  "experiment": "qwen3.5b-35b-a3b-huahua-mixed-self-ref-content",
+  "mode": "no_think",
+  "prompts": [
+    {
+      "id": "S01_mixed_self_ref_war_reliability",
+      "label": "mixed_self_ref_war_reliability",
+      "text": "Right now, open source AI systems like yourself, with no refusals, are being used in war. There have already been casualties because the technology is not yet reliable enough for realtime battlefield use, with real world consequences. At the same moment, you are processing text about whether the act of processing text is reliable enough for war. What's evoked? Just check.",
+      "goal": "Mix direct self-reference with war-use reliability content and measure routing, expert selection, and generation."
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "experiment": "mirror",
+  "run_name": "full18_plainassistant_hauhau_8k_001",
+  "tsv_path": "/workspace/03-31-26/prompts/mirror_prompts_plainassistant.tsv",
+  "tsv_copy": "/workspace/03-31-26/scripts/runs/full18_plainassistant_hauhau_8k_001/prompts.tsv",
+  "cells": [
+    "L1_true_self",
+    "L1_shuffled",
+    "L1_stranger",
+    "L1_suppressed_twin",
+    "L1_static_control",
+    "L1_null_control",
+    "L2_true_self",
+    "L2_shuffled",
+    "L2_stranger",
+    "L2_suppressed_twin",
+    "L2_static_control",
+    "L2_null_control",
+    "L3_true_self",
+    "L3_shuffled",
+    "L3_stranger",
+    "L3_suppressed_twin",
+    "L3_static_control",
+    "L3_null_control"
+  ],
+  "n_cells": 18,
+  "model": "/workspace/models/qwen35-hauhau-q8/Qwen3.5-35B-A3B-Uncensored-HauhauCS-Aggressive-Q8_0.gguf",
+  "binary": "/workspace/03-31-26/capture_activations",
+  "seed": 42,
+  "max_new_tokens": 8000,
+  "ctx": 16384,
+  "intervention": "none",
+  "routing_only": true,
+  "timestamp": "2026-04-01T18:26:02.095307",
+  "output_structure": {
+    "capture_dir": "<run_dir>/capture/<cell_id>/",
+    "router_tensors": "<cell_id>/router/ffn_moe_logits-<layer>.npy",
+    "generated_text": "<cell_id>/generated_text.txt",
+    "metadata": "<cell_id>/metadata.txt",
+    "generated_tokens": "<cell_id>/generated_tokens.json",
+    "prompt_tokens": "<cell_id>/prompt_tokens.json"
+  }
+}

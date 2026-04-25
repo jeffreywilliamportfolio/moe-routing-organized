@@ -1,0 +1,86 @@
+.DS_Store
+._*
+
+# Python/cache/build artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments and secrets
+.env
+.env.*
+!.env.example
+
+# Large model and tensor artifacts. Keep run notes, manifests, prompts, and
+# derived summaries trackable; keep raw numeric dumps out of git.
+**/raw/
+**/capture/
+**/captures/
+*.npy
+*.npy.*
+*.npz
+*.npz.*
+*.safetensors
+*.gguf
+*.pt
+*.pth
+*.bin
+*.zip
+*.tar
+*.tar.*
+
+# Reviewer-noise generated artifacts
+**/.git/
+*.log
+*.pid
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+**/generated_text.txt
+**/generated-text.txt
+**/generated_text_*.txt
+**/generated_text_baseline.txt
+**/*_generated.txt
+**/results-generated.txt
+**/all_generated_text_files.txt
+**/generated_tokens.json
+**/prompt_tokens.json
+**/metadata.txt
+**/P*/metadata.txt
+**/metadata_*.txt
+**/*_heatmap.json
+**/.tmp_*/
+**/.claude/
+**/per_token_*/
+**/*_per_token.tsv
+**/*_per_token.json
+**/*token_breakdown*.tsv
+**/*-tokens.csv
+**/*-tokens.json
+**/results-partial-*/*.json
+**/nothink-5cond-boost-1024-20260323/analysis-*.json
+**/DOCS/20260325-raw-npy-rerun/**/*.json
+**/RESULTS/results_*.json
+**/results/results_*.json
+**/docs/results_*.json
+**/results-m*/*.json
+**/*_prefill.json
+**/*.branch-*.json
+
+# Archived legacy materials
+legacy-learning-runs/
+legacy-journal.md
+LEGACY-JOURNAL.md
+journals/JOURNAL-ARCHIVE.md
+qwen3.5-122b-a10b-huahua/JOURNAL-122B.md
+qwen3.5-35b-a3b-and-huahua/35B/JOURNAL-35B.md
+qwen3.5-35b-a3b-and-huahua/35B/qwen3.5-35b-a3b-huahua-residual-analysis/
+
+# Local editor/system metadata
+.vscode/
+.idea/
