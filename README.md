@@ -1,4 +1,4 @@
-# MoE Routing Organized
+# MoE Routing Experiments February-April 2026
 
 This repository asks a narrow interpretability question: 
 
