@@ -1,6 +1,6 @@
 # Legacy Journal
 
-Running journal for legacy runs and confound documentation.
+Running journal for **legacy** runs and **confound/failures** documentation. The source files are located in the original repo **https://github.com/jeffreywilliamportfolio/moe-routing**
 
 Chronology is based on dates in run notes and result bundles when present. Undated folders are placed by dependency order: early hierarchy work, paired self-reference probes, five-condition extensions, controls, cross-model replications, then the Expert 114 intervention track. Verdicts here distinguish the result originally claimed from the part that still holds after later checks.
 
