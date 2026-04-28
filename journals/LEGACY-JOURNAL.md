@@ -1,6 +1,6 @@
 # Legacy Journal
 
-Running journal for `legacy-learning-runs`, ordered from oldest to newest as far as the artifacts allow.
+Running journal for legacy runs and confound documentation.
 
 Chronology is based on dates in run notes and result bundles when present. Undated folders are placed by dependency order: early hierarchy work, paired self-reference probes, five-condition extensions, controls, cross-model replications, then the Expert 114 intervention track. Verdicts here distinguish the result originally claimed from the part that still holds after later checks.
 
