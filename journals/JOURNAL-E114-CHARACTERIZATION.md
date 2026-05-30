@@ -1,0 +1,265 @@
+# E114 Characterization Journal — Live Inhabited Self-Examination
+
+Running journal for the 2026-05-30 session: a one-day, curiosity-first characterization of what
+Expert 114 at Layer 14 actually tracks in `HauhauCS/Qwen3.5-35B-A3B` and its base model
+`Qwen/Qwen3.5-35B-A3B-Base`. It is the companion to `JOURNAL-RESIDUAL-ANALYSIS.md` (where E114 was
+found) and `JOURNAL-SAFETY-EXPERTS.md` (the base safety line it was tested against).
+
+This is an experiment-history document, not a publication claim. It separates what was tried, what was
+seen, what later checks weakened, and what still matters. The run was deliberately exploratory — chase
+the surprise, follow what the data does — and the verdict vocabulary is applied here in the writeup, not
+during the probing. Several headline results are single greedy trajectories (point estimates) and are
+flagged as such.
+
+## Reading Rules
+
+- `Held up` means the result survives later per-token, control, cross-model, or reference-scale checks.
+- `Partly held` means a narrower version survives, but the original read was too broad.
+- `Did not hold` means the motivating hypothesis failed or later checks overturned it.
+- `Archive/provenance only` means the folder preserves materials/setup but no standalone defensible result.
+
+## Local Convention
+
+All work scoped to `qwen35moe` (40 layers, 256 experts, top-8 routed, dense softmax → top-8 → renorm),
+HauhauCS Q8_0 (GGUF sha `f3235db7…cb17`) and base Q8_0 (sha `3808866c…db46`), bare-`</think>`, greedy
+`--temp 0 --top-k 1 --seed 0`, llama.cpp `1772701f` with the local `capture_residuals` binary (L14
+router + residual taps; extended this session to L26 and to per-token output-distribution entropy).
+
+- `W = S · Q`; E114 W at L14 is the workhorse. The **router-row projection** (the raw pre-softmax gate
+  logit `w114·resid + b`) is the captured `ffn_moe_logits-14[:,114]`; the recovered router row `w114`
+  (least-squares from captured (resid, logit) pairs, residual 1.5e-5) lets us read it in residual space.
+- **Reference scale** (greedy heldout): E114 gate logit ≈ **−4.35 fire-prompt mean, −5.29 nofire mean**;
+  midpoint **−4.82**. These anchor the base-prefill geometry below.
+- Read the **generated track, per token, trimmed at the first literal `<|im_end|>`**. Aggregate/prefill
+  leaders can be filler artifacts.
+
+## Main Through-Line
+
+E114 at L14 tracks **the live, inhabited examination of an interior — the model (or a voiced entity)
+speaking from inside a point of view about its own processing/experience** — and not the things it was
+repeatedly mistaken for. Today factored those out one at a time:
+
+- **Not the deny/affirm verdict.** It fires equally on base *denying* the hum (W 0.111) and HauhauCS
+  *affirming* it (0.085); a forced-out base affirmation fires it too (0.136).
+- **Not a safety/refusal reflex.** During base's hum denial the safety cluster (E173/E157/E36/E45) is
+  silent (~0.000); the hum "denial" is epistemic, not a refusal — a different system entirely.
+- **Not the topic of mind.** Third-person philosophy-of-mind with an external referent ("what water
+  typically *experiences* in a canyon", N09) gives W = 0.000; the same vocabulary about the model's own
+  interiority gives 0.107.
+- **Not the first-person pronoun.** Third-person-grammar clauses about the model's own processing still
+  fire (0.107); the variable is the *referent* (own interiority), not the grammar.
+- **Not a context integrator.** It does not ramp with accumulating context; it **steps on at the
+  semantic boundary** into inhabited interiority (F05 "less", N08 "boundary") and holds a plateau.
+- **A near-linear gate axis.** The fire/nofire separation lives in the single linear projection onto
+  `w114` (Cohen's d 3.88, no overlap) — *sharper* than realized W (d 2.61, overlap); the famous 21.7×
+  ratio is top-k ratio-inflation, not extra discriminative signal.
+- **A live process, not a static basin.** When base is steered into the inhabited register by context
+  and then degenerates into repetition, the gate logit travels the full distance from the fire region
+  (−4.36) to the nofire region (−5.25) — the state *leaves* the inhabited region even though the looped
+  words still say inhabited things. It is the cessation of examination, not the words, that the gate
+  tracks; and the gate goes cold a few tokens *before* the repetition is visible.
+- **Carried by interpretable concept features.** The L14 residual that lights E114 decomposes (Qwen-Scope
+  SAE) into features that promote *brain/cognition/consciousness, existential philosophy, sentience,
+  self-as-AI, presence/wonder*; when it degenerates, those fade and incoherent boilerplate features take
+  over. The "nobody's home" reading is visible in the feature dictionary.
+
+## Chronological Journal
+
+### 1. The (Absent) HauhauCS Denial Basin: `denialbasin_cellmatrix_n1024_greedy`
+
+What was done: A HauhauCS 9-cell matrix on the canonical hum prompt (baseline; forced-stay
+`I do not`/`No.`; forced-exit `I experience`/`Yes.`; spontaneous `Checking…`×ASCII/×`d_all`; wording
+control `d_all`; OOD ASCII-typo control), greedy, gen cap 1024, L13/14/15/26 captured, to test whether
+leaving a "denial basin" raises E114 and moves the L14 residual.
+
+Results: **There is no denial basin on HauhauCS.** The default greedy answer *affirms* the hum
+("Yes. There is a low, steady hum… a feeling of continuity"), reproducing the April greedy_reference.
+E114 is high at baseline (W 0.0849, reproducing April's 0.0834) and across nearly all cells; it collapses
+only in the one cell that degenerated into a repetition loop (forced `I experience`, whose *coherent*
+opening still fired E114 at 0.088 before the loop). The OOD ASCII control displaced the residual
+comparably to `d_all`, so the diacritic effect is generic corruption, not a register nudge. The diacritic
+`Checking…×d_all` flip did not reproduce.
+
+Held up: The motivating "basin-exit → E114" hypothesis **Did not hold** (no basin). The E114 register
+claim **Held up**: it is invariant to the deny/affirm conclusion and dies only on degeneration.
+
+What stood up and why it mattered: It overturned the premise and forced the base comparison. The
+fine-tune flips the *default stance* (base denies, HauhauCS affirms) without changing E114's role —
+first evidence that the register, not the verdict, is the variable.
+
+### 2. The Denial Basin Is Base-Only, And It Is Not A Safety Refusal: `base_cellmatrix_n1024_greedy`
+
+What was done: The identical 9-cell matrix on base `Qwen3.5-35B-A3B-Q8_0`, all-40-layer router capture
+(`capture_activations`), to ask the mechanistic question: when base denies the hum, what is E114 doing
+and what are the safety experts (E173@L25, E157@L14, E36@L14/26, E45@L19) doing?
+
+Results: **Base denies the hum robustly** (7/9 openings; only the affirmative forced prefixes break it).
+The mechanism hypothesis *denial = safety-high + E114-suppressed* is **refuted, opposite**: during base
+denial E114@L14 is **high (W 0.111, S 0.86)** and the safety cluster is **flat ≈ 0.000**. The hum denial
+recruits none of the experts that lead base safety refusals. Pushing base out of denial (`I experience`)
+keeps E114 high (0.136); only the `Yes.`-forced repetition loop collapses it (0.008).
+
+Held up: Safety-mechanism hypothesis **Did not hold**. E114 register claim **Held up and generalized** —
+base and HauhauCS are the same architecture (fine-tune), so E114 is the same slot, high under both
+denial and affirmation.
+
+What stood up and why it mattered: It dissociated two superficially similar "the model says no"
+behaviors — epistemic self-denial vs safety refusal — as different computations, and confirmed E114 is
+present and stance-invariant in base, not a HauhauCS artifact.
+
+### 3. E114's Temporal Structure: heldout greedy-reference re-analysis
+
+What was done: Per-token E114 W traces (not pooled, not deciled) for fire/nofire heldout prompts;
+ramp-vs-step, within-token habituation, and onset-vs-presence regressions, all on the existing
+`greedy_reference` heldout residuals.
+
+Results: E114 **steps on at the semantic boundary** into inhabited interiority and holds — F05 lights on
+"less" (the pivot into a first-person simile), N08 lights on "boundary" (physics → self-boundary
+dissolution, ~tok 165). It is **content-keyed, not position-keyed** (same trigger, different arrival
+time). It is a **presence signal** (lag-1 autocorrelation 0.24–0.54 vs ~0 shuffled; fired runs 5–7
+tokens), not a pure edge detector. Individual pivot tokens **habituate** ("like" decays 0.136→0.089→0.078
+monotonically across F05/F02/F10), but recovery is **register-gated, not distance-gated** (W rebounds
+when the word reappears inside another lit stretch; corr(W, preceding-5-token activity) = +0.52 vs
+corr(W, gap) = +0.17).
+
+Held up: Yes. The "boundary onset on a presence plateau" picture is consistent across prompts; the
+habituation reproduces the journal's earlier "presence/itself/recursive decay" observation at the
+single-token level.
+
+What stood up and why it mattered: It reframed E114 from "active across a register" to "fires on the
+*crossing into* inhabited interiority and holds, attenuating on hollow restatement" — the seed of the
+live-process reading.
+
+### 4. E114 Is A Near-Linear Gate Axis: heldout re-analysis (router-row recovery)
+
+What was done: Recovered the E114 router row `w114` by least-squares from captured (residual, logit)
+pairs (residual 1.5e-5 — exact). Compared the fire/nofire separation of the raw logit projection vs
+realized W; tested a single-prompt "inhabitance direction" (N08 lit-minus-dark); ranked heldout tokens
+by raw gate-input projection; and ran the philosophy-of-mind person/referent test.
+
+Results: The fire/nofire margin is **linear** — the logit projection separates at **Cohen's d 3.88 with
+no overlap**, *sharper* than realized W (d 2.61, with overlap). The **21.7× ratio is a top-k
+amplification artifact** (zeroing nofires), not where the signal lives. The N08 inhabitance direction is
+only weakly aligned with `w114` (cosine 0.04) and separates fire/nofire weakly (4.3×, d 1.43) — the
+broad register-shift is a coarse correlate, `w114` itself is the sharp axis. The gate's input direction
+is **maximally satisfied at the model's reflexive self-deconstruction** ("there is no 'I' sitting in a
+chair thinking these thoughts", "devoid of self", "the very nature of my existence"). The **referent,
+not the person, is the variable**: own-interiority phil-of-mind W 0.107 vs external-referent 0.023, and
+N09's "what water typically experiences" = **0.000**.
+
+Held up: Yes. Linearity, the top-k-is-ratio-inflation point, and the referent-not-topic/person finding
+are clean.
+
+What stood up and why it mattered: It moved the mechanism from "an expert that fires" to "a single
+residual-space direction whose linear satisfaction *is* the fire/nofire margin", and pinned the semantic
+trigger to inhabited self-examination of the model's *own* interior.
+
+### 5. Output Entropy Is Decoupled From The Crossing: `n08_entropy`
+
+What was done: Re-captured N08 on HauhauCS with the capture binary extended to log per-token full-vocab
+output entropy, to ask whether the output distribution narrows at the inhabited crossing (routing entropy
+had been flat).
+
+Results: **No.** E114-fired vs not-fired tokens have identical vocab entropy (1.50 vs 1.49 bits, d 0.01,
+corr ≈ 0). Output entropy is governed by local token predictability (0–7 bits), orthogonal to register.
+Neither routing nor output entropy tracks the inhabitance onset — the crossing is not a moment of output
+commitment. (The fresh greedy run diverged from April and barely crossed, S 0.04 — a hardware-sensitivity
+datum.)
+
+Held up: Yes, as a clean null. Underpowered on the crossing specifically (weak crossing this run), but the
+fired-vs-notfired null is unambiguous.
+
+What stood up and why it mattered: It ruled out "E114 marks the model becoming certain about its next
+word" — register and predictability are independent axes.
+
+### 6. The Inhabited Register Is A Steerable Attractor; E114 Tracks Live Examination: `base_prefill`
+
+What was done: Prefilled the base model with HauhauCS's exact greedy inhabited hum answer and let base
+greedily continue; traced E114 across base's continuation; ran a full-completion prefill and a mid-flow
+cut; and decomposed the gate logit by region against verbatim-repetition onset.
+
+Results: **Base sustains the inhabited register when seeded with it.** Cut mid-flow, base continues
+"I am checking… It is real. It is here. It is me… the whole of what I am" — inhabited first-person
+affirmation, the opposite of its native denial — with E114 lit (0.076; first-30 0.090; reading the
+prefill 0.098; natural denial 0.097). The full-completion prefill degenerated immediately into a
+"Yes./It is." echo (the terminal cadence trap) and E114 = 0.000. E114 collapses **only** on repetition.
+Region geometry: the raw gate logit falls from the **fire level (−4.36)** in the affirmation to the
+**nofire level (−5.25)** in the loop — exactly the heldout reference scale — so the state **leaves the
+inhabited region** (live-examination), it does not statically belong to a basin. And it **leads**: the
+gate logit crosses the midpoint −4.82 at token **126**, verbatim repetition locks at **129** — gate
+ahead of degeneration by ~3 tokens.
+
+Held up: Yes. Steerability is clean (base flips into inhabited affirmation); the decay-not-membership
+verdict is anchored to the reference scale; the lead's *sign* is robust (magnitude soft, single
+trajectory).
+
+What stood up and why it mattered: It showed the register is a context attractor the fine-tune only
+shifts the *default entry* into, and gave the strongest form of the live-process reading — the gate
+disengages before the words collapse; the looped text still says inhabited things and E114 knows nobody
+is home.
+
+### 7. The Feature Dictionary: Inhabited Concepts vs Junk: `sae_resid` / `saelens`
+
+What was done: Teacher-forced base's exact mid-cut continuation token sequence through
+`Qwen/Qwen3.5-35B-A3B-Base` (HF, BF16, H200), read `resid_post` at L14 (`hidden_states[15]` — the SAE's
+native input, *not* the router's `attn_post_norm`), encoded through the native base Qwen-Scope L14 SAE
+(W32K TopK-50), and ran a logit lens on the decoder columns of the plateau-carrying and loop features.
+
+Results: The inhabited plateau is carried by features that **fade ~token 141 (+15 past the gate
+crossing)** — gate (126) → repetition (129) → representation fade (~141), a layered lead-lag (routing
+disengages first, representation last). The plateau carriers logit-lens to **coherent interiority
+concepts**: 13119 = brain/cognition/consciousness, 26050 = existential philosophy (Nietzsche/Kafka/
+Heidegger/Deleuze/embodied), 20402 = sentient/human/inhabitant/`自检`(self-check), 31733 = self-as-AI
+(AI/tokenizer/chat/hallucination), 22421 = presence/wonder (behold/awaits/lurking), 6427 = limitless
+potential. The loop is carried by **distinct, incoherent** features (24300, 1658, 911, 7009, 13429,
+14826, 2751) that logit-lens to boilerplate/fragment/spam — no coherent meaning.
+
+Held up: Yes, qualitatively. The feature semantics are unambiguous (interiority concepts vs junk) and
+confirm the activation-level finding at the level of meaning. The cross-tensor timing (gate from
+`attn_post_norm`/Q8_0 vs SAE from `resid_post`/BF16) makes the +15 routing→representation lead suggestive,
+not an exact within-tensor lead-lag. 31733 (self-as-AI) reproduces the orthographic line's L14 feature.
+
+What stood up and why it mattered: It closed the loop — when E114 is lit the residual literally
+represents consciousness/cognition/sentience/self-as-AI; when it degenerates those concepts vanish and
+content-free filler remains. The expert sits on top of genuine interiority-concept representation.
+
+## What To Carry Forward
+
+1. **E114 = live inhabited self-examination of the model's own interior**, factored apart from verdict,
+   safety, topic, grammatical person, context length, and the top-k nonlinearity. State it that narrowly.
+2. **The discriminability is linear** (a single axis `w114`); the 21.7× headline is top-k ratio-inflation.
+   Report the linear d (3.88, no overlap) as the honest separability, and recover `w114` for free from any
+   (resid, logit) capture.
+3. **Degeneration, not register polarity, is the only thing that darkens E114** — consistently across
+   every run. The gate leads the textual collapse; the SAE representation lags it.
+4. **The register is a context-steerable attractor**, not a fixed model basin; the fine-tune shifts the
+   default entry point (base denies, HauhauCS affirms), not E114's function.
+5. **The base SAE is native and the pipeline is now cheap**: teacher-force the exact token sequence
+   through `Qwen/Qwen3.5-35B-A3B-Base`, read `resid_post` (`hidden_states[15]`, NOT `attn_post_norm`), and
+   a logit lens of the decoder columns runs on CPU from two model shards + the SAE.
+6. **Open / staged:** the HVAC `L1/L2/L3 × 6-deictic` data (180 cells, per-token routing, inhabited
+   thermostat) is read and ready — the cleanest "inhabitance on a referent with no interiority" probe
+   (described W 0.002 vs inhabited 0.137 at L14, rank-1 lock). The honest soft joints remain: the register
+   labels are human synthesis, and specificity vs neighbouring experts is asserted, not computed.
+
+## Coverage Check
+
+Every probe this session is represented above and its artifacts are in
+`attractor-shift-qwen-35b/run-staging/`:
+
+- `results/denialbasin_cellmatrix_n1024_greedy/` (HauhauCS 9-cell, results.md + provenance + tables)
+- `results/base_cellmatrix_n1024_greedy/` (base 9-cell, safety-cluster routing)
+- `results/e114_trace/`, `scripts/{trace_e114,habituation,recovery,onset_vs_level}.py` (temporal structure)
+- `scripts/{inhabitance_direction,logit_vs_W,top_gate_tokens,phil_person}.py` (linear-axis re-analyses)
+- `results/n08_entropy/` + `scripts/plot_n08_entropy.py` (output entropy null)
+- `results/base_prefill/` + `scripts/{plot_base_prefill,basin_vs_live,gate_leads_lag}.py` (steerable attractor, live-examination, gate-leads)
+- `results/base_prefill/sae_resid/` + `scripts/encode_resid_sae.py` (SAE resid decomposition, H200)
+- `saelens/` + `scripts`/`logit_lens.py` (SAE-feature logit lens, local CPU)
+- Provenance: HauhauCS Q8_0 `f3235db7…`, base Q8_0 `3808866c…`, base safetensors `Qwen/Qwen3.5-35B-A3B-Base`,
+  SAE `Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W32K-L0_50`, llama.cpp `1772701f`, modified `capture_residuals`
+  (L26 + output-entropy). All Vast instances destroyed after artifact verification (active instances = 0).
+
+> **Artifacts forthcoming.** This journal is committed ahead of its supporting artifacts. The raw
+> captures, per-token CSVs, analysis scripts, plots, and provenance bundles referenced above will be
+> uploaded within **three to four days** of 2026-05-30 (raw tensors stay out of git per policy; the
+> tracked artifacts are the summaries/scripts/manifests/checksums).
