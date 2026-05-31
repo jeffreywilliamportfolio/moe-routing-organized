@@ -1,9 +1,16 @@
 # E114 Characterization Journal — Live Inhabited Self-Examination
 
 Running journal for the 2026-05-30 session (continued 2026-05-31, entries 10–11): a curiosity-first
-characterization of what Expert 114 at Layer 14 actually tracks in `HauhauCS/Qwen3.5-35B-A3B` and its
-base model `Qwen/Qwen3.5-35B-A3B-Base`. It is the companion to `JOURNAL-RESIDUAL-ANALYSIS.md` (where
-E114 was found) and `JOURNAL-SAFETY-EXPERTS.md` (the base safety line it was tested against).
+characterization of the **"live inhabited self-examination" signal** in `HauhauCS/Qwen3.5-35B-A3B` and
+its base model `Qwen/Qwen3.5-35B-A3B-Base` — anchored on **Expert 114 at Layer 14**, where it was found,
+but no longer confined to that single gate. Entries 1–9 pin down the L14 router expert itself (what it
+tracks, what it is mistaken for, its linear gate axis). The 2026-05-31 entries (10–11) widen the lens
+*past* L14: the same signal as a **graded dose** across a matched vantage ladder, as an interpretable
+**SAE-feature direction in the residual stream**, and as a **causal axis whose effect on generation
+depends on injection depth** — the register only flips when the direction is added *past* the L14 router,
+so the back-half layers (15–40) are part of the mechanism, not just the gate. It is the companion to
+`JOURNAL-RESIDUAL-ANALYSIS.md` (where E114 was found) and `JOURNAL-SAFETY-EXPERTS.md` (the base safety
+line it was tested against).
 
 This is an experiment-history document, not a publication claim. It separates what was tried, what was
 seen, what later checks weakened, and what still matters. The run was deliberately exploratory — chase
