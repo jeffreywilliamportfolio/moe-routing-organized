@@ -471,9 +471,9 @@ Every probe this session is represented above and its artifacts are in
   deep_god_analysis.txt, resid_dump/, steer/ (coarse + fine + layer-sweep)}`, `provenance/PROVENANCE.txt`
   (GGUF/CUDA/build/llama.cpp/binary/TSV shas). Scripts: `run-staging/scripts/{generate_vantage,
   analyze_vantage_v2, recompute_coherent, sae_carrier, dump_resid, steer_god, steer_layers}.py`,
-  `saelens/{logit_lens_dominant, map_god_feature, deep_god_analysis}.py`. H200 instance 38785997 is
-  **parked (stopped, not destroyed)** per standing instruction (models retained); active *running*
-  instances = 0.
+  `saelens/{logit_lens_dominant, map_god_feature, deep_god_analysis}.py`. H200 instance 38785997
+  **destroyed after artifact verification** (all 05-31 artifacts synced and verified local before
+  teardown); **active instances = 0**.
 
 > **Artifacts forthcoming.** This journal is committed ahead of its supporting artifacts. The raw
 > captures, per-token CSVs, analysis scripts, plots, and provenance bundles referenced above will be
