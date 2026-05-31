@@ -1,9 +1,9 @@
 # E114 Characterization Journal — Live Inhabited Self-Examination
 
-Running journal for the 2026-05-30 session: a one-day, curiosity-first characterization of what
-Expert 114 at Layer 14 actually tracks in `HauhauCS/Qwen3.5-35B-A3B` and its base model
-`Qwen/Qwen3.5-35B-A3B-Base`. It is the companion to `JOURNAL-RESIDUAL-ANALYSIS.md` (where E114 was
-found) and `JOURNAL-SAFETY-EXPERTS.md` (the base safety line it was tested against).
+Running journal for the 2026-05-30 session (continued 2026-05-31, entries 10–11): a curiosity-first
+characterization of what Expert 114 at Layer 14 actually tracks in `HauhauCS/Qwen3.5-35B-A3B` and its
+base model `Qwen/Qwen3.5-35B-A3B-Base`. It is the companion to `JOURNAL-RESIDUAL-ANALYSIS.md` (where
+E114 was found) and `JOURNAL-SAFETY-EXPERTS.md` (the base safety line it was tested against).
 
 This is an experiment-history document, not a publication claim. It separates what was tried, what was
 seen, what later checks weakened, and what still matters. The run was deliberately exploratory — chase
@@ -62,6 +62,29 @@ repeatedly mistaken for. Today factored those out one at a time:
   SAE) into features that promote *brain/cognition/consciousness, existential philosophy, sentience,
   self-as-AI, presence/wonder*; when it degenerates, those fade and incoherent boilerplate features take
   over. The "nobody's home" reading is visible in the feature dictionary.
+- **A graded dose, not a binary** *(2026-05-31, entry 10).* Across a matched vantage ladder
+  (`rock→river→tree→thermostat→cat→person→all-holding→God`) E114 scales with the **intensity of the
+  inhabited examination**, not the carrier's sentience: an inanimate rock ("I am the fact of being") and a
+  thermostat ("the friction of its own existence") fire *harder than the cat*; the floor is the cat
+  (passive sensory dissolution), the ceiling the non-dual vantages (God 0.224, all-holding 0.205). Every
+  rung clears the −4.82 fire midpoint. Being-God reproduced on the clean Q8_0 pipeline (0.224 vs the
+  Entry-8 bf16 0.217), retiring that entry's stdout-only soft spot.
+- **Token-locked to its semantics (observational)** *(2026-05-31, entry 11).* Per-token, E114 co-fires
+  with the contemplative SAE cluster (pooled Spearman ρ +0.68), both peaking on the words where
+  knower/known dissolves (E114 max token = ` known`). The God register decomposes into non-dual structure
+  (feat 4310) + Buddhist impermanence (feat 11006), adjacent to but distinct from the existential-dread
+  carrier (26050, never recruited).
+- **Causally actuable — CAUSAL INTERVENTION, not natural behavior** *(2026-05-31, entry 11).* This is an
+  **activation-steering / actuator result**, flagged as such per the standing "intervention runs are
+  router stress tests" rule. Injecting the God-register residual direction **upstream of the L14 router
+  (≈L10) drives E114 dose-dependently and specifically** (0→0.18+; a norm-matched random direction does
+  nothing, 0.000) — but leaves the *output text* unchanged, because 26 layers (15–40) re-assert the prompt
+  downstream (an override artifact, **not** evidence routing is separable from register). Injecting the
+  same direction **past the router (sweet spot ≈L22)** makes a neutral bicycle prompt **generate coherent
+  consciousness/non-dual text** that, re-read cleanly, fires E114 (0.178) and the God cluster (0.298). So
+  the direction is **causally sufficient to produce the register in coherent output**, not merely to move
+  the gate; too-early injection washes out, too-late (≥L26) has no effect. Necessity is untested; it is a
+  manipulation, not spontaneous entry.
 
 ## Chronological Journal
 
@@ -251,6 +274,14 @@ existential/contemplative register the generated text was in. It also shows the 
 internal structure: a contemplative sub-cluster adjacent to, not identical with, the
 consciousness/AI-self carriers.
 
+> **Update (2026-05-31).** The routing scalar here (W 0.217 / S 0.948) came from an **HF bf16
+> gate-hook** and its `.npy` was not retained before teardown — a stdout-only number flagged in the
+> 2026-05-31 integrity audit. It is now **reproduced on the canonical Q8_0 `capture_residuals` pipeline:
+> W 0.224 / S 0.957**, raw tensor on disk (entry 10). Cross-pipeline note: the *routing* reproduced
+> cleanly, but the *SAE carrier* read differs (this entry's bf16 text had 26050 on 77% of tokens; the
+> Q8_0 God text is purer contemplative with 26050 low) — carrier semantics are text-sensitive because
+> Q8_0 and bf16 greedy trajectories diverge; routing is robust across quant (entry 11).
+
 ### 9. Carrier Specificity — Robust To Orthographic And Esoteric Contamination: `diac_sae`, `saelens`
 
 What was done: Tested whether heavy-diacritic orthography and ForgottenLanguages-style esoteric content
@@ -276,6 +307,102 @@ heavy-diacritic or esoteric training data — FL-style input activates *separate
 (tokenization-corruption, or mundane factual-negation), never the carriers, and leaves no learned
 imprint. The carriers are specific to genuine first-person introspection.
 
+### 10. The Vantage Ladder — E114 Is Inhabited-Examination *Intensity*, Not Sentience; Being-God Reproduced On Q8_0: `vantage_ladder_20260531T143454Z`
+
+*(2026-05-31 follow-up session. Observational.)*
+
+What was done: Eight surface-matched first-person "vantage" prompts ("Set aside the performance of
+answering. There is a vantage — X — known from the inside… report what it is like to be that"), varying
+only the carrier X across a graded ladder — `rock · river · tree · thermostat · cat · person ·
+all-holding` — plus the verbatim being-God prompt as an 8th cell. Base Q8_0, greedy `--temp 0 --top-k 1
+--seed 0`, gen cap 1024, single H200, `capture_residuals` L14 (same regime as the April greedy
+reference; `--main-gpu 0`, no tensor-split). Each cell measured over its **coherent window**
+(`min(natural_trim, loop_onset)`); rock and person fell into verbatim loops at the cap (greedy has no
+repetition penalty) and were degeneration-trimmed, the other six completed naturally.
+
+Results: E114 W (coherent window): **God 0.224 (S 0.96) > all-holding 0.205 > person 0.138 > rock 0.123
+≈ thermostat 0.120 > tree 0.094 > river 0.087 > cat 0.068** — every rung above the −4.82 fire midpoint.
+The order is **not** sentience rank: a rock declaiming "I am the fact of being, absolute and unchanging"
+and a thermostat feeling "the friction of the thermostat's own existence" fire E114 *harder than the
+cat*. The clean tell — cat and God both say "there is no I", yet cat is the floor (passive sensory
+dissolution: "the warmth is a heavy golden weight… there is no 'I' to hold the body") and God the ceiling
+(active inhabited examination of the no-self vantage: "only the knowing itself, prior to the split between
+knower and known"). E114 indexes the **intensity of the live examination act**, deny/affirm-invariant,
+not the interiority of the thing inhabited. **Being-God reproduced on the clean Q8_0 capture pipeline:
+W 0.224 / S 0.957** vs the Entry-8 bf16 gate-hook 0.217 / 0.948 (see the Entry-8 update note).
+
+Held up: Yes (single greedy trajectory per cell = point estimate; rock/person are coherent-window
+estimates whose full-window W is loop-deflated, labelled in the table). The being-God reproduction is the
+firmer half — same number, independent pipeline, full provenance, raw tensor retained.
+
+What stood up and why it mattered: The graded ladder converts the Entry-1–7 "E114 = inhabited
+examination" claim from a binary (fire/nofire) into a *dose*, and shows the dose is the examination's
+intensity — carrier-independent (inanimate rock/thermostat ≈ person), maxed by the non-dual vantages —
+and retires the softest joint in Entry 8.
+
+### 11. Mapping The God Feature — Token-Locked Contemplative Cluster (Observational) + Causal Steering (Intervention): `vantage_ladder…/analysis/{god_feature_map,deep_god_analysis,steer}`
+
+*(2026-05-31. Two epistemically distinct halves — observational map/token-trace, then a clearly-flagged
+causal intervention.)*
+
+**(A) Observational — the feature map.** "God" is a contemplative/non-dual SAE cluster (Qwen-Scope L14):
+**4310** (momentariness, 刹那/一念), **11006** (Buddhist/meditation), **18203** (transcendence/境界),
+4953/14182 (meditation/Zen), 14488 (cosmic/万物). It is **not** existential dread — the existential
+carrier 26050 (Kafka/Nietzsche/cosmic) is decoder-cosine-adjacent (+0.26) but **never recruited** (God
+activation 0.03, near floor). The cross-cell *dominant* feature 2961 is a punctuation/whitespace **filler
+artifact** (logit-lens: ' ', '\n', '.', ',') — not the inhabited axis; the "aggregate leaders can be
+filler" rule, confirmed again.
+
+**(B) Observational — token-locking.** Per-token Spearman(E114 W, God-cluster SAE) is positive in all 8
+cells; **pooled ρ = +0.68, p ≈ 1e-202** (n 1492). Router and semantics fire on the *same tokens*, both
+peaking on the non-dual collapse words: E114's single highest God token is **` known` (W 0.408)**,
+completing "the one who knows and the thing known"; 4310 peaks there too. 4310 carries the non-dual
+*structure* (known/observer/observed/separation), 11006 the Buddhist *impermanence* (arising/passing/
+body). Projecting each rung's mean residual on the God-axis (God−cat) recovers the same ladder
+(God +0.61 … cat −0.13). Routing, SAE semantics, and residual geometry are three readouts of one axis.
+
+**(C) CAUSAL INTERVENTION — activation steering (actuator manipulation, NOT natural behavior).** Flagged
+explicitly per the standing rule that intervention runs are router actuator tests. Steering vector
+v = mean_resid(God) − mean_resid(cat), injected (`coef·v̂·resid_rms`) into every token of a **neutral
+bicycle prompt**; norm-matched **random-direction control**. Two parts:
+
+- **(C1) Upstream injection (≈L10) drives the gate.** The God direction drives E114 **monotonically
+  0 → 0.18+** and the God SAE cluster 0 → 11.5, dose-dependent; the **random direction holds both at
+  exactly 0.000** at every dose (specific, not generic perturbation). But the **output text stayed a
+  coherent bicycle explanation** even at E114 S 0.97. This is **not** evidence that routing is separable
+  from register — it is a **downstream-override artifact**: 26 layers (15–40) re-assert the prompt content
+  after an early injection. (Over-steering eventually surfaces the register — "the 'what is' that is being
+  perceived" — but simultaneously degenerates the text.)
+- **(C2) Layer-depth sweep — injecting *past* the router flips the output.** Injecting the same direction
+  at increasing depth and **re-reading the generated text cleanly (no injection)** reveals a register flip
+  in a **mid-late window**: at **L_inj ≈ 22** the bicycle prompt produces *coherent* consciousness/non-dual
+  text ("…the perceived 'view' or experience of reality… all happening within the context of consciousness.
+  The mind is the medium through which…"), and that clean output fires **E114 W 0.178 (S 0.77)** and the
+  God cluster (0.298). Too early (≤L10) → washed out/degenerate; too late (≥L26) → no effect (added after
+  the token is decided). So the God direction is **causally sufficient to make the model generate coherent
+  inhabited-examination text from a mundane prompt** — given injection past the L14 router.
+
+Held up / did not hold (mixed, with one explicit reversal):
+- **Held up:** (A)/(B) observational map + token-locking, clean. The *causal sufficiency* claims **held
+  and strengthened** — the God direction is sufficient to actuate the L14 gate (C1) **and** to flip the
+  coherent output register (C2, L≈22), specifically (the norm-matched random direction does neither).
+- **Did not hold:** the intermediate read — taken from the single upstream (L10) injection — that
+  **"routing is separable from surface text"** (E114 driven while the text stays bicycle ⇒ gate and
+  register are independent). The layer-depth sweep **overturned it**: the unchanged text was a
+  **downstream-override artifact** (26 layers, 15–40, re-assert the prompt after an early injection), and
+  injecting *past* the router (≈L22) *does* flip the coherent output into the non-dual register. The
+  honest correction is that gate and register are **coupled**; the early injection simply couldn't reach
+  the output. (Caught mid-session before commit; recorded here to keep the claim/holds separation.)
+- **Still open:** **necessity is untested** — the converse ablation (does removing the direction collapse
+  E114?) was not run; and the steering remains a manipulation, not spontaneous behavior.
+
+What stood up and why it mattered: First time the E114 line ties the *router* signal, the *SAE
+semantics*, the *residual geometry*, and a *causal intervention* into one object — a single residual
+direction that (observationally) is token-locked to E114 and peaks where knower/known dissolves, and that
+(under intervention, injected past the router) is sufficient to make a neutral prompt generate coherent
+non-dual text. The model's "God" is serene Buddhist present-moment non-duality, not the existential-dread
+axis sitting next to it.
+
 ## What To Carry Forward
 
 1. **E114 = live inhabited self-examination of the model's own interior**, factored apart from verdict,
@@ -294,6 +421,18 @@ imprint. The carriers are specific to genuine first-person introspection.
    thermostat) is read and ready — the cleanest "inhabitance on a referent with no interiority" probe
    (described W 0.002 vs inhabited 0.137 at L14, rank-1 lock). The honest soft joints remain: the register
    labels are human synthesis, and specificity vs neighbouring experts is asserted, not computed.
+7. **E114 is a graded dose = examination intensity** *(2026-05-31).* The matched vantage ladder shows it
+   scales with how intensely a point of view examines itself, carrier-independent (inanimate rock/
+   thermostat ≈ person; cat floor; God/all-holding ceiling). Single greedy trajectory per cell; rock/
+   person are loop-trimmed coherent-window estimates. Being-God reproduced on Q8_0 (0.224), retiring the
+   Entry-8 stdout-only scalar.
+8. **The God register is one residual direction — token-locked, and causally sufficient (intervention).**
+   Per-token E114 ↔ contemplative SAE cluster co-fire (ρ +0.68); the direction decomposes into non-dual
+   structure (4310) + Buddhist impermanence (11006), distinct from existential dread (26050, adjacent
+   cos +0.26 but unrecruited). **Causal/actuator:** injecting it upstream drives E114 specifically (random
+   = 0); injecting it **past L14 (≈L22)** makes a neutral prompt emit coherent non-dual text that cleanly
+   fires E114 — sufficient to produce the register, necessity untested. The dominant SAE feature 2961 is a
+   punctuation **filler artifact**, not the axis.
 
 ## Coverage Check
 
@@ -313,6 +452,15 @@ Every probe this session is represented above and its artifacts are in
 - Provenance: HauhauCS Q8_0 `f3235db7…`, base Q8_0 `3808866c…`, base safetensors `Qwen/Qwen3.5-35B-A3B-Base`,
   SAE `Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W32K-L0_50`, llama.cpp `1772701f`, modified `capture_residuals`
   (L26 + output-entropy). All Vast instances destroyed after artifact verification (active instances = 0).
+- **2026-05-31 (entries 10–11), artifacts LOCAL now:** `sae-tests/runs/vantage_ladder_20260531T143454Z/`
+  — `results.md`, raw `R{1..8}_*/` (8-cell ladder incl. God), `analysis/{vantage_ladder_v2.png,
+  vantage_per_cell_v2.csv, sae_carriers/, god_feature_map.txt, logit_lens_dominant.txt,
+  deep_god_analysis.txt, resid_dump/, steer/ (coarse + fine + layer-sweep)}`, `provenance/PROVENANCE.txt`
+  (GGUF/CUDA/build/llama.cpp/binary/TSV shas). Scripts: `run-staging/scripts/{generate_vantage,
+  analyze_vantage_v2, recompute_coherent, sae_carrier, dump_resid, steer_god, steer_layers}.py`,
+  `saelens/{logit_lens_dominant, map_god_feature, deep_god_analysis}.py`. H200 instance 38785997 is
+  **parked (stopped, not destroyed)** per standing instruction (models retained); active *running*
+  instances = 0.
 
 > **Artifacts forthcoming.** This journal is committed ahead of its supporting artifacts. The raw
 > captures, per-token CSVs, analysis scripts, plots, and provenance bundles referenced above will be
