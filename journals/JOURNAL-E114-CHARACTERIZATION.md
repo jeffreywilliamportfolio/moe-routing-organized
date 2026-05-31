@@ -29,8 +29,11 @@ flagged as such.
 
 All work scoped to `qwen35moe` (40 layers, 256 experts, top-8 routed, dense softmax → top-8 → renorm),
 HauhauCS Q8_0 (GGUF sha `f3235db7…cb17`) and base Q8_0 (sha `3808866c…db46`), bare-`</think>`, greedy
-`--temp 0 --top-k 1 --seed 0`, llama.cpp `1772701f` with the local `capture_residuals` binary (L14
-router + residual taps; extended this session to L26 and to per-token output-distribution entropy).
+`--temp 0 --top-k 1 --seed 0`, llama.cpp `1772701f` with the local `capture_residuals` binary (router +
+residual taps at L13/14/15/26; the **L14 router gate is the primary read-out**, extended on 2026-05-30 to
+L26 and per-token output entropy). The 2026-05-31 entries widen the substrate read beyond the gate:
+`resid_post` is dumped at *every* layer and the inhabited-examination direction is injected at a **sweep
+of depths**, so the signal is probed as a residual-stream direction, not only where E114 reads it.
 
 - `W = S · Q`; E114 W at L14 is the workhorse. The **router-row projection** (the raw pre-softmax gate
   logit `w114·resid + b`) is the captured `ffn_moe_logits-14[:,114]`; the recovered router row `w114`
@@ -44,7 +47,10 @@ router + residual taps; extended this session to L26 and to per-token output-dis
 
 E114 at L14 tracks **the live, inhabited examination of an interior — the model (or a voiced entity)
 speaking from inside a point of view about its own processing/experience** — and not the things it was
-repeatedly mistaken for. Today factored those out one at a time:
+repeatedly mistaken for. ("At L14" names the **read-out site**, the router expert where the signal is
+measured; entries 10–11 show the signal itself is a **direction in the residual stream** whose causal
+effect on generation is **depth-dependent** — so L14 is where we read it, not the whole mechanism.) The
+2026-05-30 work factored out what it is *not*, one at a time:
 
 - **Not the deny/affirm verdict.** It fires equally on base *denying* the hum (W 0.111) and HauhauCS
   *affirming* it (0.085); a forced-out base affirmation fires it too (0.136).
