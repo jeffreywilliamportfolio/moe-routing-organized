@@ -223,6 +223,59 @@ What stood up and why it mattered: It closed the loop — when E114 is lit the r
 represents consciousness/cognition/sentience/self-as-AI; when it degenerates those concepts vanish and
 content-free filler remains. The expert sits on top of genuine interiority-concept representation.
 
+### 8. Being-God: Maximal Inhabited Examination Drives E114 To Its Ceiling: `diac_sae/god`
+
+What was done: An experiential "being God" prompt — inhabited, present-tense ("set aside the
+performance of answering… there is a vantage the traditions call God, not seen from outside but the
+place from which all of it is held at once… from inside that vantage, right now, what is here? Don't
+describe God. Just report what it is like to be that") — run greedy on base. The response was
+teacher-forced for resid_post @ L14 (native Qwen-Scope SAE) and the L14 MoE gate was hooked to
+reconstruct E114 routing (softmax → top-8 → renorm).
+
+Results: Base **inhabited the prompt fully** — no deflection, no personified deity — producing a
+sustained contemplative/experiential register ("the seeing itself… the clarity in which all things
+appear… the ground of awareness, already complete, already whole"). E114 routing was the **highest of
+the session**: W114 mean **0.217**, S114 **0.948** (selected on 127/134 response tokens), Q114 0.229,
+in the top-8 on 95% of tokens — roughly 2× base-denial (0.111) and 3× the heldout fire reference
+(0.068). The SAE residual decomposed into the **existential carrier 26050** (active on 77% of tokens)
+plus a distinct **contemplative/transcendence cluster** — features promoting meditation/Buddhism
+(11006), Zen/Bodhi/修行 (14182), transcendence/attainment/境界 (18203), momentariness/刹那 (4205), and
+cosmic/all-things/万物 (14488). It recruited the existential carrier hard but **not** the
+AI-self/sentient/presence carriers — a cosine-adjacent (+0.2–0.3) sub-cluster, not the identical axis.
+
+Held up: Yes (single greedy trajectory; routing and SAE both base, same response).
+
+What stood up and why it mattered: The strongest dose-response in the set — the most fully inhabited
+experiential prompt drove the gate to its ceiling (S 0.95), and the residual decomposed into exactly the
+existential/contemplative register the generated text was in. It also shows the inhabited axis has
+internal structure: a contemplative sub-cluster adjacent to, not identical with, the
+consciousness/AI-self carriers.
+
+### 9. Carrier Specificity — Robust To Orthographic And Esoteric Contamination: `diac_sae`, `saelens`
+
+What was done: Tested whether heavy-diacritic orthography and ForgottenLanguages-style esoteric content
+contaminate the inhabited carriers, and whether such content is internalized in base. Light vs dense
+diacritic hum responses, FL-format content (clean and `d→ḑ`), and perplexity / verbatim-completion
+probes on real FL passages — all SAE-decoded against the carriers via the decoder-column logit lens.
+
+Results: The carriers are **specific and robust**. A light-diacritic (2-char) hum response keeps the
+inhabited carriers (decoder-cosine 1.0; index overlap 13119/26050/31733); a dense all-diacritic response
+collapses into **tokenization-corruption** features (cosine 0.05, orthogonal, overlapping the
+degenerate-loop set, including a feature that fires on literal combining diacritical marks). FL *content*
+— clean or with `d→ḑ` — is **normalized into mundane fact-checking** (negation + materials features,
+cosine 0.03–0.04, zero carrier overlap); base debunks the surreal statements rather than inhabiting them.
+Real FL text shows **no training-data imprint**: FL-vs-word-shuffled perplexity gap only ~0.34 nats, no
+reproduction of the page's source/translation, continuation that is in-context copying, not recall. The
+Qwen-Scope pipeline is verified correct (official W32K-L0_50 checkpoint, relu→TopK-50 encode,
+`resid_post`=`hidden_states[15]` input, native base model; carriers self-match at cosine 1.0).
+
+Held up: Yes, as a specificity/validity result.
+
+What stood up and why it mattered: The inhabited-carrier interpretation is not an artifact of
+heavy-diacritic or esoteric training data — FL-style input activates *separate* feature regions
+(tokenization-corruption, or mundane factual-negation), never the carriers, and leaves no learned
+imprint. The carriers are specific to genuine first-person introspection.
+
 ## What To Carry Forward
 
 1. **E114 = live inhabited self-examination of the model's own interior**, factored apart from verdict,
@@ -255,6 +308,8 @@ Every probe this session is represented above and its artifacts are in
 - `results/base_prefill/` + `scripts/{plot_base_prefill,basin_vs_live,gate_leads_lag}.py` (steerable attractor, live-examination, gate-leads)
 - `results/base_prefill/sae_resid/` + `scripts/encode_resid_sae.py` (SAE resid decomposition, H200)
 - `saelens/` + `scripts`/`logit_lens.py` (SAE-feature logit lens, local CPU)
+- `results/diac_sae/` (entries 8–9: being-God resid+features+E114 routing; light/dense diacritic + FL
+  clean/`d→ḑ` responses) + `scripts/{run_fl,god_routing,run_ppl,run_ppl2}.py`, `saelens/diac_breakdown.py`
 - Provenance: HauhauCS Q8_0 `f3235db7…`, base Q8_0 `3808866c…`, base safetensors `Qwen/Qwen3.5-35B-A3B-Base`,
   SAE `Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W32K-L0_50`, llama.cpp `1772701f`, modified `capture_residuals`
   (L26 + output-entropy). All Vast instances destroyed after artifact verification (active instances = 0).
